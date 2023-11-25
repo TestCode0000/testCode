@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Credit Card Payment Gateway</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+  }
+  .payment-container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    width: 4s00px;
+  }
+  .payment-details {
+    background-color: #eee;
+    padding: 5px;
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  .payment-container h2, .payment-details {
+    margin: 0;
+    padding: 10px 0;
+  }
+  .form-control {
+    margin-bottom: 10px;
+  }
+  .form-control label {
+    display: block;
+    color: #666;
+  }
+  .form-control input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    box-sizing: border-box;
+  }
+  .form-control input:invalid {
+    border-color: red;
+  }
+  .form-control input:invalid + span {
+    display: none;
+  }
+  .form-control input:required:invalid + span {
+    display: block;
+    color: red;
+    font-size: 12px;
+  }
+  .payment-logos {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+  }
+  .payment-logos img {
+    width: 50px;
+    height: auto;
+  }
+  .confirm-btn {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background-color: #5cb85c;
+    color: white;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+  .confirm-btn:hover {
+    background-color: #4cae4c;
+  }
+  .confirm-btn:active {
+    background-color: #4a4a4a;
+  }
+</style>
+</head>
+<body>
+<div class="payment-container">
+  <h2>Credit Card Payment Gateway</h2>
+  <div class="payment-details">Payment Details</div>
+  <div class="payment-logos">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/MasterCard_Logo.svg/1280px-MasterCard_Logo.svg.png" alt="MasterCard">
+    <img src="https://seeklogo.com/images/D/Discover_Card-logo-4BC5D7C02C-seeklogo.com.png" alt="Discover">
+    <img src="https://1000logos.net/wp-content/uploads/2021/04/Paypal-logo.png" alt="PayPal">
+    <img src="https://centaur-wp.s3.eu-central-1.amazonaws.com/designweek/prod/content/uploads/2018/04/10121846/am_amex_06.jpg" alt="American Express">
+  </div>
+  <div class="form-control">
+    <label for="card-number">CARD NUMBER</label>
+    <input type="text" id="card-number" required>
+    <span>This field is required</span>
+  </div>
+  <div class="form-control">
+    <label for="expiration-date">EXPIRATION DATE</label>
+    <input type="text" id="expiration-date" required placeholder="MM / YY" pattern="(0[1-9]|1[0-2])\/[0-9]{2}">
+    <span>This field is required</span>
+  </div>
+  <div class="form-control">
+    <label for="cv-code">CV CODE</label>
+    <input type="number" id="cv-code" required pattern="[0-9]{3}">
+    <span>This field is required</span>
+  </div>
+  <div class="form-control">
+    <label for="card-owner">CARD OWNER</label>
+    <input type="text" id="card-owner" required>
+    <span>This field is required</span>
+  </div>
+  <button class="confirm-btn" id="confirm-payment">Confirm Payment</button>
+</div>
+<script>
+  document.getElementById('confirm-payment').addEventListener('click', function() {
+    var cardNumber = document.getElementById('card-number').value;
+    var expirationDate = document.getElementById('expiration-date').value;
+    var cvCode = document.getElementById('cv-code').value;
+    var cardOwner = document.getElementById('card-owner').value;
+    if(cardNumber && expirationDate && cvCode && cardOwner) {
+      alert('Thank You "We are always keen to guarantee your account"');
+    } else {
+      document.querySelectorAll('.form-control input').forEach(function(input) {
+        if(!input.value) {
+          input.classList.add('required');
+          input.nextElementSibling.style.display = 'block';
+        }
+      });
+    }
+  });
+
+  document.querySelectorAll('.form-control input').forEach(function(input) {
+    input.addEventListener('input', function() {
+      if(this.value) {
+        this.classList.remove('required');
+        this.nextElementSibling.style.display = 'none';
+      }
+    });
+  });
+
+  // Add an input event listener for the expiration date field to auto-insert a slash
+  document.getElementById('expiration-date').addEventListener('input', function(e) {
+    var input = e.target.value;
+    if (input.length === 2 && !input.includes('/')) {
+      e.target.value = input + '/';
+    }
+  });
+</script>
+</body>
+</html>
